@@ -1,6 +1,6 @@
-<ion-view view-title="Login">
+<ion-view view-title="Register">
  <ion-content>
-    <form ng-submit="loginUser()">
+    <form ng-submit="registerUser()">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
@@ -10,15 +10,14 @@
           <span class="input-label">Password</span>
           <input type="password" ng-model="user.password">
         </label>
+        <label class="item item-input">
+          <span class="input-label">Confirm Password</span>
+          <input type="password" ng-model="user.confirmPassword">
+        </label>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
+          <button class="button button-block button-positive" type="submit">Register</button>
         </label>
       </div>
-       <div class="col-70 col-offset-25">
-    <img ng-src="img/googleplus.png" ng-click="googleLogin()"
-      style="width: 100%"> <img ng-src="img/facebook.png"
-      ng-click="facebookLogin()" style="width: 100%">
-  </div>
-    </form>
+       </form>
   </ion-content>
 </ion-view>
