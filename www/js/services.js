@@ -1,103 +1,50 @@
 angular.module('starter.services', [])
 
-.factory('UserService', [ '$http', function($http) {
-	return {
-		registerUser : registerUser,
-		loginUser : loginUser,
-		getUser : getUser
-	};
+.factory('Chats', function() {
+  // Might use a resource here that returns a JSON array
 
-	function registerUser(user) {
-		return $http({
-			method : 'POST',
-			url : 'http://54.69.21.130/api/user',
-			data : user
-		})
-	}
-	;
+  // Some fake testing data
+  var chats = [{
+    id: 0,
+    name: 'Ben Sparrow',
+    lastText: 'You on your way?',
+    face: 'img/ben.png'
+  }, {
+    id: 1,
+    name: 'Max Lynx',
+    lastText: 'Hey, it\'s me',
+    face: 'img/max.png'
+  }, {
+    id: 2,
+    name: 'Adam Bradleyson',
+    lastText: 'I should buy a boat',
+    face: 'img/adam.jpg'
+  }, {
+    id: 3,
+    name: 'Perry Governor',
+    lastText: 'Look at my mukluks!',
+    face: 'img/perry.png'
+  }, {
+    id: 4,
+    name: 'Mike Harrington',
+    lastText: 'This is wicked good ice cream.',
+    face: 'img/mike.png'
+  }];
 
-	function loginUser(user) {
-		return $http({
-			method : 'POST',
-			url : 'http://54.69.21.130/api/login',
-			data : user
-		})
-	}
-	;
-	function getUser(user) {
-		return $http({
-			method : 'GET',
-			url : 'http://54.69.21.130/api/user/' + user.userID,
-			headers : {
-				'x-access-token' : user.token
-			}
-		})
-	}
-	;
-
-} ]).factory('ImageService', [ '$http', function($http) {
-	return {
-		getImage : getImage,
-		getUserImages : getUserImages,
-		getmultiImage : getmultiImage,
-		updatePoints : updatePoints,
-		updateUserPoints : updateUserPoints
-	};
-	function getImage(imageId) {
-		return $http({
-			method : 'GET',
-			url : '/api/image/' + imageId
-		})
-	}
-	;
-	function getUserImages(userId) {
-		return $http({
-			method : 'GET',
-			url : '/api/image/getUserImages/' + userId
-		})
-	}
-	;
-	function getmultiImage(multiImage) {
-		return $http({
-			method : 'GET',
-			url : '/api/image/multiImage/' + multiImage
-
-		})
-	}
-	;
-	function updatePoints(imageId) {
-		return $http({
-			method : 'PUT',
-			url : '/api/image/' + imageId
-
-		})
-	}
-	;
-	function updateUserPoints(userID) {
-		return $http({
-			method : 'PUT',
-			url : '/api/user/' + userID
-		})
-	}
-	;
-
-} ]).factory('$localstorage', [ '$window', function($window) {
-	return {
-		set : function(key, value) {
-			$window.localStorage[key] = value;
-		},
-		get : function(key, defaultValue) {
-			return $window.localStorage[key] || defaultValue;
-		},
-		setObject : function(key, value) {
-			$window.localStorage[key] = JSON.stringify(value);
-		},
-		getObject : function(key) {
-			if ($window.localStorage[key] === "undefined") {
-				return {};
-			} else {
-				return JSON.parse($window.localStorage[key] || '{}');
-			}
-		}
-	}
-} ]);
+  return {
+    all: function() {
+      return chats;
+    },
+    remove: function(chat) {
+      chats.splice(chats.indexOf(chat), 1);
+    },
+    get: function(chatId) {
+      for (var i = 0; i < chats.length; i++) {
+        if (chats[i].id === parseInt(chatId)) {
+          return chats[i];
+        }
+      }
+      return null;
+    }
+  };
+});
