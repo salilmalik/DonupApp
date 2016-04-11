@@ -31,6 +31,7 @@ angular
         'ProfileCtrl',
         function($scope, $window, $state, $cordovaOauth,
             ProfileService, UserService, $localstorage) {
+          console.log('ProfileCtrl');
           $scope.isAuthenticated = false;
           var user = {};
           var user = $localstorage.getObject('user');
@@ -43,12 +44,14 @@ angular
             $scope.imageURL = user.imageURL;
           }
           $scope.googleLogin = function() {
+                console.log('googleLogin');
             $cordovaOauth
                 .google(
                     "673944921770-cv6rdg7rgtcqu4p15ob12brc3v1u6963.apps.googleusercontent.com",
                     [ "email" ])
                 .then(
                     function(result) {
+                      console.log('googleLogin');
                       $scope.access_token = result.access_token;
                       ProfileService
                           .getProfileGoogle(
@@ -56,7 +59,7 @@ angular
                           .success(
                               function(data) {
                                 user.name = data.displayName;
-                                user.email = data.emails[0].value;
+                                user.username = data.emails[0].value;
                                 user.imageURL = data.image.url
                                 saveUserData(user);
                               });
@@ -64,6 +67,7 @@ angular
                     });
           }
           function saveUserData(user) {
+            console.log('user'+JSON.stringify(user));
             UserService.saveUserData(user).success(function(data) {
               $scope.userID = data.objectId;
               $localstorage.setObject('user', user);
@@ -73,6 +77,7 @@ angular
             });
           }
           $scope.facebookLogin = function() {
+            console.log('facebookLogin');
             $cordovaOauth
                 .facebook(
                     "758110324290388",
@@ -87,7 +92,7 @@ angular
                           .success(
                               function(data) {
                                 user.name = data.name;
-                                user.email = data.email;
+                                user.username = data.email;
                                 user.imageURL = data.picture.data.url;
                                 saveUserData(user);
                               });
